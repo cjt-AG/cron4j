@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -21,7 +21,6 @@ package it.sauronsoftware.cron4j;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
@@ -64,21 +63,21 @@ import java.util.TimeZone;
  * Some examples:
  * </p>
  * <p>
- * <strong>5 * * * *</strong><br />
+ * <strong>5 * * * *</strong><br>
  * This pattern causes a task to be launched once every hour, at the begin of
  * the fifth minute (00:05, 01:05, 02:05 etc.).
  * </p>
  * <p>
- * <strong>* * * * *</strong><br />
+ * <strong>* * * * *</strong><br>
  * This pattern causes a task to be launched every minute.
  * </p>
  * <p>
- * <strong>* 12 * * Mon</strong><br />
+ * <strong>* 12 * * Mon</strong><br>
  * This pattern causes a task to be launched every minute during the 12th hour
  * of Monday.
  * </p>
  * <p>
- * <strong>* 12 16 * Mon</strong><br />
+ * <strong>* 12 16 * Mon</strong><br>
  * This pattern causes a task to be launched every minute during the 12th hour
  * of Monday, 16th, but only if the day is the 16th of the month.
  * </p>
@@ -86,7 +85,7 @@ import java.util.TimeZone;
  * Every sub-pattern can contain two or more comma separated values.
  * </p>
  * <p>
- * <strong>59 11 * * 1,2,3,4,5</strong><br />
+ * <strong>59 11 * * 1,2,3,4,5</strong><br>
  * This pattern causes a task to be launched at 11:59AM on Monday, Tuesday,
  * Wednesday, Thursday and Friday.
  * </p>
@@ -94,7 +93,7 @@ import java.util.TimeZone;
  * Values intervals are admitted and defined using the minus character.
  * </p>
  * <p>
- * <strong>59 11 * * 1-5</strong><br />
+ * <strong>59 11 * * 1-5</strong><br>
  * This pattern is equivalent to the previous one.
  * </p>
  * <p>
@@ -104,18 +103,18 @@ import java.util.TimeZone;
  * <em>0,maxvalue</em> or <em>a-b</em>.
  * </p>
  * <p>
- * <strong>*&#47;5 * * * *</strong><br />
+ * <strong>*&#47;5 * * * *</strong><br>
  * This pattern causes a task to be launched every 5 minutes (0:00, 0:05, 0:10,
  * 0:15 and so on).
  * </p>
  * <p>
- * <strong>3-18&#47;5 * * * *</strong><br />
+ * <strong>3-18&#47;5 * * * *</strong><br>
  * This pattern causes a task to be launched every 5 minutes starting from the
  * third minute of the hour, up to the 18th (0:03, 0:08, 0:13, 0:18, 1:03, 1:08
  * and so on).
  * </p>
  * <p>
- * <strong>*&#47;15 9-17 * * *</strong><br />
+ * <strong>*&#47;15 9-17 * * *</strong><br>
  * This pattern causes a task to be launched every 15 minutes between the 9th
  * and 17th hour of the day (9:00, 9:15, 9:30, 9:45 and so on... note that the
  * last execution will be at 17:45).
@@ -124,13 +123,13 @@ import java.util.TimeZone;
  * All the fresh described syntax rules can be used together.
  * </p>
  * <p>
- * <strong>* 12 10-16&#47;2 * *</strong><br />
+ * <strong>* 12 10-16&#47;2 * *</strong><br>
  * This pattern causes a task to be launched every minute during the 12th hour
  * of the day, but only if the day is the 10th, the 12th, the 14th or the 16th
  * of the month.
  * </p>
  * <p>
- * <strong>* 12 1-15,17,20-25 * *</strong><br />
+ * <strong>* 12 1-15,17,20-25 * *</strong><br>
  * This pattern causes a task to be launched every minute during the 12th hour
  * of the day, but the day of the month must be between the 1st and the 15th,
  * the 20th and the 25, or at least it must be the 17th.
@@ -140,11 +139,11 @@ import java.util.TimeZone;
  * pipe character:
  * </p>
  * <p>
- * <strong>0 5 * * *|8 10 * * *|22 17 * * *</strong><br />
+ * <strong>0 5 * * *|8 10 * * *|22 17 * * *</strong><br>
  * This pattern causes a task to be launched every day at 05:00, 10:08 and
  * 17:22.
  * </p>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -177,13 +176,13 @@ public class SchedulingPattern {
 
 	/**
 	 * Validates a string as a scheduling pattern.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern to validate.
 	 * @return true if the given string represents a valid scheduling pattern;
 	 *         false otherwise.
 	 */
-	public static boolean validate(String schedulingPattern) {
+	public static boolean validate(final String schedulingPattern) {
 		try {
 			new SchedulingPattern(schedulingPattern);
 		} catch (InvalidPatternException e) {
@@ -200,27 +199,27 @@ public class SchedulingPattern {
 	/**
 	 * The ValueMatcher list for the "minute" field.
 	 */
-	protected ArrayList minuteMatchers = new ArrayList();
+	protected ArrayList<ValueMatcher> minuteMatchers = new ArrayList<>();
 
 	/**
 	 * The ValueMatcher list for the "hour" field.
 	 */
-	protected ArrayList hourMatchers = new ArrayList();
+	protected ArrayList<ValueMatcher> hourMatchers = new ArrayList<>();
 
 	/**
 	 * The ValueMatcher list for the "day of month" field.
 	 */
-	protected ArrayList dayOfMonthMatchers = new ArrayList();
+	protected ArrayList<ValueMatcher> dayOfMonthMatchers = new ArrayList<>();
 
 	/**
 	 * The ValueMatcher list for the "month" field.
 	 */
-	protected ArrayList monthMatchers = new ArrayList();
+	protected ArrayList<ValueMatcher> monthMatchers = new ArrayList<>();
 
 	/**
 	 * The ValueMatcher list for the "day of week" field.
 	 */
-	protected ArrayList dayOfWeekMatchers = new ArrayList();
+	protected ArrayList<ValueMatcher> dayOfWeekMatchers = new ArrayList<>();
 
 	/**
 	 * How many matcher groups in this pattern?
@@ -229,13 +228,13 @@ public class SchedulingPattern {
 
 	/**
 	 * Builds a SchedulingPattern parsing it from a string.
-	 * 
+	 *
 	 * @param pattern
 	 *            The pattern as a crontab-like string.
 	 * @throws InvalidPatternException
 	 *             If the supplied string is not a valid pattern.
 	 */
-	public SchedulingPattern(String pattern) throws InvalidPatternException {
+	public SchedulingPattern(final String pattern) throws InvalidPatternException {
 		this.asString = pattern;
 		StringTokenizer st1 = new StringTokenizer(pattern, "|");
 		if (st1.countTokens() < 1) {
@@ -290,7 +289,7 @@ public class SchedulingPattern {
 
 	/**
 	 * A ValueMatcher utility builder.
-	 * 
+	 *
 	 * @param str
 	 *            The pattern part for the ValueMatcher creation.
 	 * @param parser
@@ -299,16 +298,16 @@ public class SchedulingPattern {
 	 * @throws Exception
 	 *             If the supplied pattern part is not valid.
 	 */
-	private ValueMatcher buildValueMatcher(String str, ValueParser parser)
+	private ValueMatcher buildValueMatcher(final String str, final ValueParser parser)
 			throws Exception {
 		if (str.length() == 1 && str.equals("*")) {
 			return new AlwaysTrueValueMatcher();
 		}
-		ArrayList values = new ArrayList();
+		ArrayList<Integer> values = new ArrayList<>();
 		StringTokenizer st = new StringTokenizer(str, ",");
 		while (st.hasMoreTokens()) {
 			String element = st.nextToken();
-			ArrayList local;
+			ArrayList<Integer> local;
 			try {
 				local = parseListElement(element, parser);
 			} catch (Exception e) {
@@ -316,8 +315,7 @@ public class SchedulingPattern {
 						+ "\", invalid element \"" + element + "\", "
 						+ e.getMessage());
 			}
-			for (Iterator i = local.iterator(); i.hasNext();) {
-				Object value = i.next();
+			for (Integer value : local) {
 				if (!values.contains(value)) {
 					values.add(value);
 				}
@@ -335,7 +333,7 @@ public class SchedulingPattern {
 
 	/**
 	 * Parses an element of a list of values of the pattern.
-	 * 
+	 *
 	 * @param str
 	 *            The element string.
 	 * @param parser
@@ -344,14 +342,14 @@ public class SchedulingPattern {
 	 * @throws Exception
 	 *             If the supplied pattern part is not valid.
 	 */
-	private ArrayList parseListElement(String str, ValueParser parser)
+	private ArrayList<Integer> parseListElement(final String str, final ValueParser parser)
 			throws Exception {
 		StringTokenizer st = new StringTokenizer(str, "/");
 		int size = st.countTokens();
 		if (size < 1 || size > 2) {
 			throw new Exception("syntax error");
 		}
-		ArrayList values;
+		ArrayList<Integer> values;
 		try {
 			values = parseRange(st.nextToken(), parser);
 		} catch (Exception e) {
@@ -368,7 +366,7 @@ public class SchedulingPattern {
 			if (div < 1) {
 				throw new Exception("non positive divisor \"" + div + "\"");
 			}
-			ArrayList values2 = new ArrayList();
+			ArrayList<Integer> values2 = new ArrayList<>();
 			for (int i = 0; i < values.size(); i += div) {
 				values2.add(values.get(i));
 			}
@@ -380,7 +378,7 @@ public class SchedulingPattern {
 
 	/**
 	 * Parses a range of values.
-	 * 
+	 *
 	 * @param str
 	 *            The range string.
 	 * @param parser
@@ -389,14 +387,14 @@ public class SchedulingPattern {
 	 * @throws Exception
 	 *             If the supplied pattern part is not valid.
 	 */
-	private ArrayList parseRange(String str, ValueParser parser)
+	private ArrayList<Integer> parseRange(final String str, final ValueParser parser)
 			throws Exception {
 		if (str.equals("*")) {
 			int min = parser.getMinValue();
 			int max = parser.getMaxValue();
-			ArrayList values = new ArrayList();
+			ArrayList<Integer> values = new ArrayList<>();
 			for (int i = min; i <= max; i++) {
-				values.add(new Integer(i));
+				values.add(Integer.valueOf(i));
 			}
 			return values;
 		}
@@ -414,8 +412,8 @@ public class SchedulingPattern {
 					+ e.getMessage());
 		}
 		if (size == 1) {
-			ArrayList values = new ArrayList();
-			values.add(new Integer(v1));
+			ArrayList<Integer> values = new ArrayList<>();
+			values.add(Integer.valueOf(v1));
 			return values;
 		} else {
 			String v2Str = st.nextToken();
@@ -426,23 +424,23 @@ public class SchedulingPattern {
 				throw new Exception("invalid value \"" + v2Str + "\", "
 						+ e.getMessage());
 			}
-			ArrayList values = new ArrayList();
+			ArrayList<Integer> values = new ArrayList<>();
 			if (v1 < v2) {
 				for (int i = v1; i <= v2; i++) {
-					values.add(new Integer(i));
+					values.add(Integer.valueOf(i));
 				}
 			} else if (v1 > v2) {
 				int min = parser.getMinValue();
 				int max = parser.getMaxValue();
 				for (int i = v1; i <= max; i++) {
-					values.add(new Integer(i));
+					values.add(Integer.valueOf(i));
 				}
 				for (int i = min; i <= v2; i++) {
-					values.add(new Integer(i));
+					values.add(Integer.valueOf(i));
 				}
 			} else {
 				// v1 == v2
-				values.add(new Integer(v1));
+				values.add(Integer.valueOf(v1));
 			}
 			return values;
 		}
@@ -451,14 +449,14 @@ public class SchedulingPattern {
 	/**
 	 * This methods returns true if the given timestamp (expressed as a UNIX-era
 	 * millis value) matches the pattern, according to the given time zone.
-	 * 
+	 *
 	 * @param timezone
 	 *            A time zone.
 	 * @param millis
 	 *            The timestamp, as a UNIX-era millis value.
 	 * @return true if the given timestamp matches the pattern.
 	 */
-	public boolean match(TimeZone timezone, long millis) {
+	public boolean match(final TimeZone timezone, final long millis) {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTimeInMillis(millis);
 		gc.setTimeZone(timezone);
@@ -469,14 +467,14 @@ public class SchedulingPattern {
 		int dayOfWeek = gc.get(Calendar.DAY_OF_WEEK) - 1;
 		int year = gc.get(Calendar.YEAR);
 		for (int i = 0; i < matcherSize; i++) {
-			ValueMatcher minuteMatcher = (ValueMatcher) minuteMatchers.get(i);
-			ValueMatcher hourMatcher = (ValueMatcher) hourMatchers.get(i);
-			ValueMatcher dayOfMonthMatcher = (ValueMatcher) dayOfMonthMatchers.get(i);
-			ValueMatcher monthMatcher = (ValueMatcher) monthMatchers.get(i);
-			ValueMatcher dayOfWeekMatcher = (ValueMatcher) dayOfWeekMatchers.get(i);
+			ValueMatcher minuteMatcher = minuteMatchers.get(i);
+			ValueMatcher hourMatcher = hourMatchers.get(i);
+			ValueMatcher dayOfMonthMatcher = dayOfMonthMatchers.get(i);
+			ValueMatcher monthMatcher = monthMatchers.get(i);
+			ValueMatcher dayOfWeekMatcher = dayOfWeekMatchers.get(i);
 			boolean eval = minuteMatcher.match(minute)
 					&& hourMatcher.match(hour)
-					&& ((dayOfMonthMatcher instanceof DayOfMonthValueMatcher) ? ((DayOfMonthValueMatcher) dayOfMonthMatcher)
+					&& (dayOfMonthMatcher instanceof DayOfMonthValueMatcher ? ((DayOfMonthValueMatcher) dayOfMonthMatcher)
 							.match(dayOfMonth, month, gc.isLeapYear(year))
 							: dayOfMonthMatcher.match(dayOfMonth))
 					&& monthMatcher.match(month)
@@ -492,27 +490,28 @@ public class SchedulingPattern {
 	 * This methods returns true if the given timestamp (expressed as a UNIX-era
 	 * millis value) matches the pattern, according to the system default time
 	 * zone.
-	 * 
+	 *
 	 * @param millis
 	 *            The timestamp, as a UNIX-era millis value.
 	 * @return true if the given timestamp matches the pattern.
 	 */
-	public boolean match(long millis) {
+	public boolean match(final long millis) {
 		return match(TimeZone.getDefault(), millis);
 	}
 
 	/**
 	 * Returns the pattern as a string.
-	 * 
+	 *
 	 * @return The pattern as a string.
 	 */
+	@Override
 	public String toString() {
 		return asString;
 	}
 
 	/**
 	 * This utility method changes an alias to an int value.
-	 * 
+	 *
 	 * @param value
 	 *            The value.
 	 * @param aliases
@@ -523,7 +522,7 @@ public class SchedulingPattern {
 	 * @throws Exception
 	 *             If the expressed values doesn't match any alias.
 	 */
-	private static int parseAlias(String value, String[] aliases, int offset)
+	private static int parseAlias(final String value, final String[] aliases, final int offset)
 			throws Exception {
 		for (int i = 0; i < aliases.length; i++) {
 			if (aliases[i].equalsIgnoreCase(value)) {
@@ -540,7 +539,7 @@ public class SchedulingPattern {
 
 		/**
 		 * Attempts to parse a value.
-		 * 
+		 *
 		 * @param value
 		 *            The value.
 		 * @return The parsed value.
@@ -551,14 +550,14 @@ public class SchedulingPattern {
 
 		/**
 		 * Returns the minimum value accepred by the parser.
-		 * 
+		 *
 		 * @return The minimum value accepred by the parser.
 		 */
 		public int getMinValue();
 
 		/**
 		 * Returns the maximum value accepred by the parser.
-		 * 
+		 *
 		 * @return The maximum value accepred by the parser.
 		 */
 		public int getMaxValue();
@@ -582,18 +581,19 @@ public class SchedulingPattern {
 
 		/**
 		 * Builds the value parser.
-		 * 
+		 *
 		 * @param minValue
 		 *            The minimum allowed value.
 		 * @param maxValue
 		 *            The maximum allowed value.
 		 */
-		public SimpleValueParser(int minValue, int maxValue) {
+		public SimpleValueParser(final int minValue, final int maxValue) {
 			this.minValue = minValue;
 			this.maxValue = maxValue;
 		}
 
-		public int parse(String value) throws Exception {
+		@Override
+		public int parse(final String value) throws Exception {
 			int i;
 			try {
 				i = Integer.parseInt(value);
@@ -606,10 +606,12 @@ public class SchedulingPattern {
 			return i;
 		}
 
+		@Override
 		public int getMinValue() {
 			return minValue;
 		}
 
+		@Override
 		public int getMaxValue() {
 			return maxValue;
 		}
@@ -658,14 +660,15 @@ public class SchedulingPattern {
 
 		/**
 		 * Added to support last-day-of-month.
-		 * 
+		 *
 		 * @param value
 		 *            The value to be parsed
 		 * @return the integer day of the month or 32 for last day of the month
 		 * @throws Exception
 		 *             if the input value is invalid
 		 */
-		public int parse(String value) throws Exception {
+		@Override
+		public int parse(final String value) throws Exception {
 			if (value.equalsIgnoreCase("L")) {
 				return 32;
 			} else {
@@ -693,7 +696,8 @@ public class SchedulingPattern {
 			super(1, 12);
 		}
 
-		public int parse(String value) throws Exception {
+		@Override
+		public int parse(final String value) throws Exception {
 			try {
 				// try as a simple value
 				return super.parse(value);
@@ -722,7 +726,8 @@ public class SchedulingPattern {
 			super(0, 7);
 		}
 
-		public int parse(String value) throws Exception {
+		@Override
+		public int parse(final String value) throws Exception {
 			try {
 				// try as a simple value
 				return super.parse(value) % 7;

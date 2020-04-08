@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -24,7 +24,7 @@ import java.lang.reflect.Modifier;
 /**
  * This kind of task can be used to invoke a static method of a Java class. The
  * specified method must accept an array of strings as its sole argument.
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.2
  */
@@ -48,7 +48,7 @@ class StaticMethodTask extends Task {
 
 	/**
 	 * Builds the task.
-	 * 
+	 *
 	 * @param className
 	 *            The Java class name.
 	 * @param methodName
@@ -58,7 +58,7 @@ class StaticMethodTask extends Task {
 	 *            Arguments for the static method. The array can be empty, but
 	 *            it can't be null.
 	 */
-	public StaticMethodTask(String className, String methodName, String[] args) {
+	public StaticMethodTask(final String className, final String methodName, final String[] args) {
 		this.className = className;
 		this.methodName = methodName;
 		this.args = args;
@@ -69,7 +69,8 @@ class StaticMethodTask extends Task {
 	 * reflection to load the given class and call the given static method with
 	 * the supplied arguments.
 	 */
-	public void execute(TaskExecutionContext context) throws RuntimeException {
+	@Override
+	public void execute(final TaskExecutionContext context) throws RuntimeException {
 		// Loads the class.
 		Class classObject;
 		try {

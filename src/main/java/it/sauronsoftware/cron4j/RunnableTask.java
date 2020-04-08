@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -23,7 +23,7 @@ package it.sauronsoftware.cron4j;
  * A {@link Task} implementation acting as a wrapper around a {@link Runnable}
  * object.
  * </p>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -36,19 +36,19 @@ class RunnableTask extends Task {
 
 	/**
 	 * Builds the task.
-	 * 
+	 *
 	 * @param runnable
 	 *            The wrapped Runnable object.
 	 * @throws InvalidPatternException
 	 *             If the supplied pattern is not valid.
 	 */
-	public RunnableTask(Runnable runnable) throws InvalidPatternException {
+	public RunnableTask(final Runnable runnable) throws InvalidPatternException {
 		this.runnable = runnable;
 	}
 
 	/**
 	 * Returns the wrapped Runnable object.
-	 * 
+	 *
 	 * @return The wrapped Runnable object.
 	 */
 	public Runnable getRunnable() {
@@ -59,13 +59,15 @@ class RunnableTask extends Task {
 	 * Implements {@link Task#execute(TaskExecutionContext)}, launching the
 	 * {@link Runnable#run()} method on the wrapped object.
 	 */
-	public void execute(TaskExecutionContext context) {
+	@Override
+	public void execute(final TaskExecutionContext context) {
 		runnable.run();
 	}
 
 	/**
 	 * Overrides {@link Object#toString()}.
 	 */
+	@Override
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append("Task[");

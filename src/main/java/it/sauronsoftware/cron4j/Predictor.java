@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -32,7 +32,7 @@ import java.util.TimeZone;
  * with the pattern <em>0 3 * jan-jun,sep-dec mon-fri</em>. You can predict the
  * next <em>n</em> execution of the task using a Predictor instance:
  * </p>
- * 
+ *
  * <pre>
  * String pattern = &quot;0 3 * jan-jun,sep-dec mon-fri&quot;;
  * Predictor p = new Predictor(pattern);
@@ -40,7 +40,7 @@ import java.util.TimeZone;
  * 	System.out.println(p.nextMatchingDate());
  * }
  * </pre>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 1.1
  */
@@ -63,7 +63,7 @@ public class Predictor {
 
 	/**
 	 * It builds a predictor with the given scheduling pattern and start time.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern on which the prediction will be based.
 	 * @param start
@@ -71,15 +71,15 @@ public class Predictor {
 	 * @throws InvalidPatternException
 	 *             In the given scheduling pattern isn't valid.
 	 */
-	public Predictor(String schedulingPattern, long start)
+	public Predictor(final String schedulingPattern, final long start)
 			throws InvalidPatternException {
 		this.schedulingPattern = new SchedulingPattern(schedulingPattern);
-		this.time = (start / (1000 * 60)) * 1000 * 60;
+		this.time = start / (1000 * 60) * 1000 * 60;
 	}
 
 	/**
 	 * It builds a predictor with the given scheduling pattern and start time.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern on which the prediction will be based.
 	 * @param start
@@ -87,7 +87,7 @@ public class Predictor {
 	 * @throws InvalidPatternException
 	 *             In the given scheduling pattern isn't valid.
 	 */
-	public Predictor(String schedulingPattern, Date start)
+	public Predictor(final String schedulingPattern, final Date start)
 			throws InvalidPatternException {
 		this(schedulingPattern, start.getTime());
 	}
@@ -95,69 +95,69 @@ public class Predictor {
 	/**
 	 * It builds a predictor with the given scheduling pattern and the current
 	 * system time as the prediction start time.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern on which the prediction will be based.
 	 * @throws InvalidPatternException
 	 *             In the given scheduling pattern isn't valid.
 	 */
-	public Predictor(String schedulingPattern) throws InvalidPatternException {
+	public Predictor(final String schedulingPattern) throws InvalidPatternException {
 		this(schedulingPattern, System.currentTimeMillis());
 	}
 
 	/**
 	 * It builds a predictor with the given scheduling pattern and start time.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern on which the prediction will be based.
 	 * @param start
 	 *            The start time of the prediction.
 	 * @since 2.0
 	 */
-	public Predictor(SchedulingPattern schedulingPattern, long start) {
+	public Predictor(final SchedulingPattern schedulingPattern, final long start) {
 		this.schedulingPattern = schedulingPattern;
-		this.time = (start / (1000 * 60)) * 1000 * 60;
+		this.time = start / (1000 * 60) * 1000 * 60;
 	}
 
 	/**
 	 * It builds a predictor with the given scheduling pattern and start time.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern on which the prediction will be based.
 	 * @param start
 	 *            The start time of the prediction.
 	 * @since 2.0
 	 */
-	public Predictor(SchedulingPattern schedulingPattern, Date start) {
+	public Predictor(final SchedulingPattern schedulingPattern, final Date start) {
 		this(schedulingPattern, start.getTime());
 	}
 
 	/**
 	 * It builds a predictor with the given scheduling pattern and the current
 	 * system time as the prediction start time.
-	 * 
+	 *
 	 * @param schedulingPattern
 	 *            The pattern on which the prediction will be based.
 	 * @since 2.0
 	 */
-	public Predictor(SchedulingPattern schedulingPattern) {
+	public Predictor(final SchedulingPattern schedulingPattern) {
 		this(schedulingPattern, System.currentTimeMillis());
 	}
 
 	/**
 	 * Sets the time zone for predictions.
-	 * 
+	 *
 	 * @param timeZone
 	 *            The time zone for predictions.
 	 * @since 2.2.5
 	 */
-	public void setTimeZone(TimeZone timeZone) {
+	public void setTimeZone(final TimeZone timeZone) {
 		this.timeZone = timeZone;
 	}
 
 	/**
 	 * It returns the next matching moment as a millis value.
-	 * 
+	 *
 	 * @return The next matching moment as a millis value.
 	 */
 	public synchronized long nextMatchingTime() {
@@ -285,7 +285,7 @@ public class Predictor {
 				}
 			}
 			// Seems it matches!
-			times[k] = (c.getTimeInMillis() / (1000 * 60)) * 1000 * 60;
+			times[k] = c.getTimeInMillis() / (1000 * 60) * 1000 * 60;
 		}
 		// Which one?
 		long min = Long.MAX_VALUE;
@@ -302,7 +302,7 @@ public class Predictor {
 
 	/**
 	 * It returns the next matching moment as a {@link Date} object.
-	 * 
+	 *
 	 * @return The next matching moment as a {@link Date} object.
 	 */
 	public synchronized Date nextMatchingDate() {

@@ -119,25 +119,25 @@ stamper&agrave; il triste (ma vero) messaggio &quot;Un altro minuto
 <h2>2. Scheduling pattern</h2>
 <p>Un pattern di schedulazione &quot;a la UNIX&quot; &egrave; rappresentato con una stringa divisa in cinque parti, ognuna separata dalla successiva attraverso una spaziatura. I cinque campi sono, rispettivamente:</p>
 <ol>
-<li>Sotto-pattern per i <strong>minuti</strong>.<br />
+<li>Sotto-pattern per i <strong>minuti</strong>.<br>
 Attraverso questo pattern si esprime in quali minuti si desidera avviare il
 task. I valori ammessi vanno da 0 a 59.</li>
-<li>Sotto-pattern per le <strong>ore</strong>.<br />
+<li>Sotto-pattern per le <strong>ore</strong>.<br>
 Attraverso questo pattern si esprime in quali ore si desidera avviare il
 task. I valori ammessi vanno da 0 a 23.</li>
-<li>Sotto-pattern per il <strong>giorno del mese</strong>.<br />
+<li>Sotto-pattern per il <strong>giorno del mese</strong>.<br>
 Attraverso questo pattern si esprime in quali giorni del mese si desidera
 avviare il task. I valori ammessi vanno da 1 a 31. Lo speciale valore
 &quot;L&quot; pu&ograve; essere utilizzato per riconoscere automaticamente
 l'ultimo giorno del mese.</li>
-<li>Sotto-pattern per il <strong>mese</strong>.<br />
+<li>Sotto-pattern per il <strong>mese</strong>.<br>
 Attraverso questo pattern si esprime in quali mesi si desidera avviare il
 task. I valori ammessi vanno da 1 (gennaio) a 12 (dicembre) , oppure &egrave;
 possibile usare le stringhe-equivalenti &quot;jan&quot;, &quot;feb&quot;,
 &quot;mar&quot;, &quot;apr&quot;, &quot;may&quot;, &quot;jun&quot;,
 &quot;jul&quot;, &quot;aug&quot;, &quot;sep&quot;, &quot;oct&quot;,
 &quot;nov&quot; e &quot;dec&quot;.</li>
-<li>Sotto-pattern per il <strong>giorno della settimana</strong>.<br />
+<li>Sotto-pattern per il <strong>giorno della settimana</strong>.<br>
 Attraverso questo pattern si esprime in quali giorni della settimana si
 desidera avviare il task. I valori ammessi vanno da 0 (domenica) a 6
 (sabato), oppure &egrave; possibile usare le stringhe-equivalenti:
@@ -154,29 +154,29 @@ seconda del contesto, <em>tutti i minuti</em>, <em>tutte le ore</em>,
 	href="api/it/sauronsoftware/cron4j/InvalidPatternException.html"><em>it.sauronsoftware.cron4j.InvalidPatternException</em></a>. La classe <em>SchedulingPattern</em> offre inoltre il metodo statico  <a
 	href="api/it/sauronsoftware/cron4j/SchedulingPattern.html#validate(java.lang.String)"><em>validate(String)</em></a>, che pu&ograve; essere utilizzato per validare una stringa prima di utilizzarla come un pattern di schedulazione.</p>
 <p>Alcuni esempi:</p>
-<p><strong>5 * * * *</strong><br />
+<p><strong>5 * * * *</strong><br>
 Questo pattern avvia il task cui &egrave; collegato una volta all'ora,
 esattamente ogni volta che scatta il quinto minuto di un'ora (alle 00:05,
 alle 01:05, alle 02:05 e cos&igrave; via).</p>
-<p><strong>* * * * *</strong><br />
+<p><strong>* * * * *</strong><br>
 Questo pattern avvia il task cui &egrave; collegato allo scattare di ogni
 minuto.</p>
-<p><strong>0 12 * * Mon</strong><br />
+<p><strong>0 12 * * Mon</strong><br>
 
 Questo pattern avvia il task cui &egrave; collegato allo scattare delle 12:00
 di ogni luned&igrave;.</p>
-<p><strong>0 12 16 * Mon</strong><br />
+<p><strong>0 12 16 * Mon</strong><br>
 Questo pattern avvia il task cui &egrave; collegato allo scattare delle 12:00
 del 16 del mese, ma solo se &egrave; luned&igrave;.</p>
 <p>Su un singolo sotto-pattern, secondo esigenza, &egrave; possibile esprimere
 pi&ugrave; condizioni di avvio, separandole con una virgola. Ad esempio:</p>
 
-<p><strong>59 11 * * 1,2,3,4,5</strong><br />
+<p><strong>59 11 * * 1,2,3,4,5</strong><br>
 Questo pattern avvia il task cui &egrave; collegato alle 11:59 di ogni
 luned&igrave;, marted&igrave;, mercoled&igrave;, gioved&igrave; e
 venerd&igrave;.</p>
 <p>E' inoltre possibile esprimere degli intervalli, con il carattere meno:</p>
-<p><strong>59 11 * * 1-5</strong><br />
+<p><strong>59 11 * * 1-5</strong><br>
 Questo pattern &egrave;, nel significato, identico al precedente.</p>
 
 <p>Il carattere slash pu&ograve; essere usato per identificare dei valori
@@ -184,36 +184,36 @@ all'interno di un range. Si usa sia nella forma <em>*&#47;c</em> sia in quella
 <em>a-b/c</em>. Il sottopattern cos&igrave; espresso viene soddisfatto ogni
 <em>c</em> valori che sono nel range <em>0,valore-massimo</em> oppure
 <em>a-b</em>.</p>
-<p><strong>*&#47;5 * * * *</strong><br />
+<p><strong>*&#47;5 * * * *</strong><br>
 Questo pattern avvia il task collegato ogni 5 minuti (0:00, 0:05, 0:10, 0:15
 e cos&igrave; via).</p>
-<p><strong>3-18&#47;5 * * * *</strong><br />
+<p><strong>3-18&#47;5 * * * *</strong><br>
 Questo pattern avvia il task collegato ogni 5 minuti a partire dal terzo di
 ogni ora, fino al diciottesimo (0:03, 0:08, 0:13, 0:18, 1:03, 1:08 e cos&igrave;
 via).</p>
-<p><strong>*&#47;15 9-17 * * *</strong><br />
+<p><strong>*&#47;15 9-17 * * *</strong><br>
 Questo pattern avvia il task cui &egrave; collegato ogni 15 minuti nelle ore
 che vanno dalle 9 alle 17. In pratica il task sar&agrave; avviato alle 09:00,
 alle 09:15, alle 09:30, alle 09:45, alle 10:00 e cos&igrave; via, fino ad
 arrivare alle 17:45.</p>
 
-<p><strong>* 12 10-16/2 * *</strong><br />
+<p><strong>* 12 10-16/2 * *</strong><br>
 Questo pattern avvia il task cui &egrave; collegato ogni minuto delle ore 12,
 ogni due giorni nell'intervallo 10-16.</p>
-<p><strong>* 12 10,12,14,16 * *</strong><br />
+<p><strong>* 12 10,12,14,16 * *</strong><br>
 Questo pattern &egrave; identico al precedente ma invece dello slash scrive
 la condizione per esteso.
 </p>
 <p>Tutte le regole illustrate sinora per i sotto-pattern possono essere
 combinate assieme per esprimere condizioni di maggiore complessit&agrave;.
 Alcuni esempi:</p>
-<p><strong>* 12 1-15,17,20-25 * *</strong><br />
+<p><strong>* 12 1-15,17,20-25 * *</strong><br>
 Esegue il task ogni minuto delle ore 12, purch&eacute; il giorno del mese sia
 o tra il primo ed il 15, o il 17, o tra il 20 ed il 25.</p>
 
 <p>Infine pi&ugrave; pattern possono essere concatenati in un pattern composto,
 usando il simbolo pipe come separatore:</p>
-<p><strong>0 5 * * *|8 10 * * *|22 17 * * *</strong><br />
+<p><strong>0 5 * * *|8 10 * * *|22 17 * * *</strong><br>
 Esegue il task ogni giorno di ogni mese alle ore 05:00, alle ore 10:08 e alle
 ore 17:22.</p>
 <p><a href="#pIndex">Torna all'indice</a></p>
@@ -350,18 +350,18 @@ task.setStdinFile(new File(&quot;in.txt&quot;));</pre>
 <ul>
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskLaunching(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskLaunching(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskLaunching(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskLaunching(TaskExecutor)</em></a><br>
 	Questo metodo viene chiamato ogni volta che l'esecuzione di un task ha inizio.</p>
 	</li>
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskSucceeded(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskSucceeded(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskSucceeded(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskSucceeded(TaskExecutor)</em></a><br>
 	Questo metodo viene chiamato ogni volta che l'esecuzione di un task &egrave; terminata con successo.</p>
 	</li>
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskFailed(it.sauronsoftware.cron4j.TaskExecutor,%20java.lang.Throwable)"><em>taskFailed(TaskExecutor,
-	Throwable)</em></a><br />
+	Throwable)</em></a><br>
 	Questo metodo viene chiamato ogni volta che l'esecuzione di un task &egrave; fallita a causa di un'eccezione non gestita.</p>
 	</li>
 </ul>
@@ -423,40 +423,40 @@ listener</a>&quot;).</p>
 	href="api/it/sauronsoftware/cron4j/TaskExecutor.html#getTaskExecutorListeners()"><em>getTaskExecutorListeners()</em></a>.</p>
 <p>L'interfaccia <em>TaskExecutorListener</em> richiede i seguenti metodi:</p>
 <ul><li><p><a
-		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionPausing(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionPausing(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionPausing(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionPausing(TaskExecutor)</em></a><br>
 	Questo metodo viene richiamato quando all'esecutore viene richiesto di mettere in pausa l'esecuzione corrente. Il parametro fornito rappresenta l'esecutore interessato dall'evento.</p>
 	</li>
 
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionResuming(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionResuming(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionResuming(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionResuming(TaskExecutor)</em></a><br>
 	Questo metodo viene richiamato quando all'esecutore viene richiesto di riprendere l'esecuzione corrente, dopo che questa &egrave; stata messa in pausa. Il parametro fornito rappresenta l'esecutore interessato dall'evento.</p>
 	</li>
 
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionStopping(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionStopping(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionStopping(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionStopping(TaskExecutor)</em></a><br>
 	Questo metodo viene richiamato quando all'esecutore viene richiesto di interrompere l'esecuzione corrente. Il parametro fornito rappresenta l'esecutore interessato dall'evento.</p>
 	</li>
 
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionTerminated(it.sauronsoftware.cron4j.TaskExecutor,%20java.lang.Throwable)"><em>executionTerminated(TaskExecutor,
-	Throwable)</em></a><br />
+	Throwable)</em></a><br>
 	Questo metodo viene richiamato quando l'esecutore ha completato l'esecuzione del task. Il primo parametro fornito rappresenta l'esecutore interessato dall'evento. Il secondo parametro, di tipo <em>java.lang.Throwable</em>, &egrave; <em>null</em> nel caso in cui l'esecuzione &egrave; terminata regolarmente, mentre &egrave; valorizzato con l'eccezione riscontrata nel caso in cui l'esecuzione sia terminata anticipatamente a causa di un errore.</p>
 	</li>
 
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#statusMessageChanged(it.sauronsoftware.cron4j.TaskExecutor,%20java.lang.String)"><em>statusMessageChanged(TaskExecutor,
-	String)</em></a><br />
+	String)</em></a><br>
 	Questo metodo viene richiamato ogni volta che il messaggio di stato dell'esecuzione viene modificato dal task. Il primo parametro fornito rappresenta l'esecutore interessato dall'evento. Il secondo parametro, di tipo <em>java.lang.String</em>, &egrave; il nuovo messaggio di stato propagato dal task.</p>
 	</li>
 
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#completenessValueChanged(it.sauronsoftware.cron4j.TaskExecutor,%20double)"><em>completenessValueChanged(TaskExecutor,
-	double)</em></a><br />
+	double)</em></a><br>
 	Questo metodo viene richiamato ogni volta che il livello di completamento dell'esecuzione viene aggiornato dal task. Il primo parametro fornito rappresenta l'esecutore interessato dall'evento. Il secondo parametro, di tipo <em>double</em>, &egrave; il nuovo valore propagato dal task, sempre e comunque compreso tra 0 ed 1.</p>
 	</li>
 

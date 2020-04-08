@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * <p>
  * A {@link TaskCollector} implementation managing a task list in memory.
  * </p>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -38,21 +38,21 @@ class MemoryTaskCollector implements TaskCollector {
 	/**
 	 * The inner scheduling pattern list.
 	 */
-	private ArrayList patterns = new ArrayList();
+	private ArrayList<SchedulingPattern> patterns = new ArrayList<>();
 
 	/**
 	 * The inner task list.
 	 */
-	private ArrayList tasks = new ArrayList();
+	private ArrayList<Task> tasks = new ArrayList<>();
 
 	/**
 	 * IDs for task-pattern couples.
 	 */
-	private ArrayList ids = new ArrayList();
+	private ArrayList<String> ids = new ArrayList<>();
 
 	/**
 	 * Counts how many task are currently collected by this collector.
-	 * 
+	 *
 	 * @return The size of the currently collected task list.
 	 */
 	public synchronized int size() {
@@ -61,14 +61,14 @@ class MemoryTaskCollector implements TaskCollector {
 
 	/**
 	 * Adds a pattern and a task to the collector.
-	 * 
+	 *
 	 * @param pattern
 	 *            The scheduling pattern.
 	 * @param task
 	 *            The task.
 	 * @return An ID for the scheduled operation.
 	 */
-	public synchronized String add(SchedulingPattern pattern, Task task) {
+	public synchronized String add(final SchedulingPattern pattern, final Task task) {
 		String id = GUIDGenerator.generate();
 		patterns.add(pattern);
 		tasks.add(task);
@@ -78,11 +78,11 @@ class MemoryTaskCollector implements TaskCollector {
 
 	/**
 	 * Updates a scheduling pattern in the collector.
-	 * 
+	 *
 	 * @param id
 	 *            The ID of the scheduled couple.
 	 */
-	public synchronized void update(String id, SchedulingPattern pattern) {
+	public synchronized void update(final String id, final SchedulingPattern pattern) {
 		int index = ids.indexOf(id);
 		if (index > -1) {
 			patterns.set(index, pattern);
@@ -91,11 +91,11 @@ class MemoryTaskCollector implements TaskCollector {
 
 	/**
 	 * Removes a task and its scheduling pattern from the collector.
-	 * 
+	 *
 	 * @param id
 	 *            The ID of the scheduled couple.
 	 */
-	public synchronized void remove(String id) throws IndexOutOfBoundsException {
+	public synchronized void remove(final String id) throws IndexOutOfBoundsException {
 		int index = ids.indexOf(id);
 		if (index > -1) {
 			tasks.remove(index);
@@ -106,16 +106,16 @@ class MemoryTaskCollector implements TaskCollector {
 
 	/**
 	 * Retrieves a task from the collector.
-	 * 
+	 *
 	 * @param id
 	 *            The ID of the scheduled couple.
 	 * @return The task with the specified assigned ID, or null if it doesn't
 	 *         exist.
 	 */
-	public synchronized Task getTask(String id) {
+	public synchronized Task getTask(final String id) {
 		int index = ids.indexOf(id);
 		if (index > -1) {
-			return (Task) tasks.get(index);
+			return tasks.get(index);
 		} else {
 			return null;
 		}
@@ -123,16 +123,16 @@ class MemoryTaskCollector implements TaskCollector {
 
 	/**
 	 * Retrieves a scheduling pattern from the collector.
-	 * 
+	 *
 	 * @param id
 	 *            The ID of the scheduled couple.
 	 * @return The scheduling pattern with the specified assigned ID, or null if
 	 *         it doesn't exist.
 	 */
-	public synchronized SchedulingPattern getSchedulingPattern(String id) {
+	public synchronized SchedulingPattern getSchedulingPattern(final String id) {
 		int index = ids.indexOf(id);
 		if (index > -1) {
-			return (SchedulingPattern) patterns.get(index);
+			return patterns.get(index);
 		} else {
 			return null;
 		}
@@ -141,12 +141,13 @@ class MemoryTaskCollector implements TaskCollector {
 	/**
 	 * Implements {@link TaskCollector#getTasks()}.
 	 */
+	@Override
 	public synchronized TaskTable getTasks() {
 		TaskTable ret = new TaskTable();
-		int size = tasks.size();
-		for (int i = 0; i < size; i++) {
-			Task t = (Task) tasks.get(i);
-			SchedulingPattern p = (SchedulingPattern) patterns.get(i);
+		int tasksSize = tasks.size();
+		for (int i = 0; i < tasksSize; i++) {
+			Task t = tasks.get(i);
+			SchedulingPattern p = patterns.get(i);
 			ret.add(p, t);
 		}
 		return ret;

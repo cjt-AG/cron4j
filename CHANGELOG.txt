@@ -1,3 +1,8 @@
+RELEASE 3.0.0 - 2020-04-08
+- changed buildprocess to maven
+- upgraded to java 11
+- provide as OSGi bundle
+
 RELEASE 2.2.6 - TBD
 - clock time change bug fixed
 

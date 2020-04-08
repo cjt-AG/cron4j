@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -23,7 +23,7 @@ package it.sauronsoftware.cron4j;
  * retrieves a list of task from a set of {@link TaskCollector}s. Then it
  * launches, within a separate {@link TaskExecutor}, every retrieved task whose
  * scheduling pattern matches the given reference time.
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -51,7 +51,7 @@ class LauncherThread extends Thread {
 
 	/**
 	 * Builds the launcher.
-	 * 
+	 *
 	 * @param scheduler
 	 *            The owner scheduler.
 	 * @param collectors
@@ -59,20 +59,20 @@ class LauncherThread extends Thread {
 	 * @param referenceTimeInMillis
 	 *            A reference time for task launching.
 	 */
-	public LauncherThread(Scheduler scheduler, TaskCollector[] collectors,
-			long referenceTimeInMillis) {
+	public LauncherThread(final Scheduler scheduler, final TaskCollector[] collectors,
+			final long referenceTimeInMillis) {
 		this.scheduler = scheduler;
 		this.collectors = collectors;
 		this.referenceTimeInMillis = referenceTimeInMillis;
 		// Thread name.
 		String name = "cron4j::scheduler[" + scheduler.getGuid()
-				+ "]::launcher[" + guid + "]";
+		+ "]::launcher[" + guid + "]";
 		setName(name);
 	}
 
 	/**
 	 * Returns the GUID for this object.
-	 * 
+	 *
 	 * @return The GUID for this object.
 	 */
 	public Object getGuid() {
@@ -82,6 +82,7 @@ class LauncherThread extends Thread {
 	/**
 	 * Overrides {@link Thread#run()}.
 	 */
+	@Override
 	public void run() {
 		outer: for (int i = 0; i < collectors.length; i++) {
 			TaskTable taskTable = collectors[i].getTasks();
@@ -97,7 +98,7 @@ class LauncherThread extends Thread {
 				}
 			}
 		}
-		// Notifies completed.
-		scheduler.notifyLauncherCompleted(this);
+	// Notifies completed.
+	scheduler.notifyLauncherCompleted(this);
 	}
 }

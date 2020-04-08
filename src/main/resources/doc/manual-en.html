@@ -150,55 +150,55 @@ method, that can be used to validate a string before using it as a
 scheduling pattern.</p>
 
 <p>Some examples:</p>
-<p><strong>5 * * * *</strong><br />
+<p><strong>5 * * * *</strong><br>
 This pattern causes a task to be launched once every hour, at the begin
 of the fifth minute (00:05, 01:05, 02:05 etc.).</p>
-<p><strong>* * * * *</strong><br />
+<p><strong>* * * * *</strong><br>
 This pattern causes a task to be launched every minute.</p>
-<p><strong>* 12 * * Mon</strong><br />
+<p><strong>* 12 * * Mon</strong><br>
 This pattern causes a task to be launched every minute during the 12th
 hour of Monday.</p>
-<p><strong>* 12 16 * Mon</strong><br />
+<p><strong>* 12 16 * Mon</strong><br>
 This pattern causes a task to be launched every minute during the 12th
 hour of Monday, 16th, but only if the day is the 16th of the month.</p>
 <p>Every sub-pattern can contain two or more comma separated values.</p>
 
-<p><strong>59 11 * * 1,2,3,4,5</strong><br />
+<p><strong>59 11 * * 1,2,3,4,5</strong><br>
 This pattern causes a task to be launched at 11:59AM on Monday, Tuesday,
 Wednesday, Thursday and Friday.</p>
 <p>Values intervals are admitted and defined using the minus
 character.</p>
-<p><strong>59 11 * * 1-5</strong><br />
+<p><strong>59 11 * * 1-5</strong><br>
 This pattern is equivalent to the previous one.</p>
 
 <p>The slash character can be used to identify step values within a range. It
 can be used both in the form <em>*&#47;c</em> and <em>a-b/c</em>. The subpattern
 is matched every <em>c</em> values of the range <em>0,maxvalue</em> or 
 <em>a-b</em>.</p>
-<p><strong>*&#47;5 * * * *</strong><br />
+<p><strong>*&#47;5 * * * *</strong><br>
 This pattern causes a task to be launched every 5 minutes (0:00, 0:05, 0:10,
 0:15 and so on).</p>
-<p><strong>3-18&#47;5 * * * *</strong><br />
+<p><strong>3-18&#47;5 * * * *</strong><br>
 This pattern causes a task to be launched every 5 minutes starting from the
 third minute of the hour, up to the 18th (0:03, 0:08, 0:13, 0:18, 1:03, 1:08
 and so on).</p>
-<p><strong>*&#47;15 9-17 * * *</strong><br />
+<p><strong>*&#47;15 9-17 * * *</strong><br>
 This pattern causes a task to be launched every 15 minutes between the
 9th and 17th hour of the day (9:00, 9:15, 9:30, 9:45 and so on... note
 that the last execution will be at 17:45).</p>
 
 <p>All the fresh described syntax rules can be used together.</p>
-<p><strong>* 12 10-16/2 * *</strong><br />
+<p><strong>* 12 10-16/2 * *</strong><br>
 This pattern causes a task to be launched every minute during the 12th
 hour of the day, but only if the day is the 10th, the 12th, the 14th or
 the 16th of the month.</p>
-<p><strong>* 12 1-15,17,20-25 * *</strong><br />
+<p><strong>* 12 1-15,17,20-25 * *</strong><br>
 This pattern causes a task to be launched every minute during the 12th
 hour of the day, but the day of the month must be between the 1st and
 the 15th, the 20th and the 25, or at least it must be the 17th.</p>
 <p>Finally cron4j lets you combine more scheduling patterns into
 one, with the pipe character:</p>
-<p><strong>0 5 * * *|8 10 * * *|22 17 * * *</strong><br />
+<p><strong>0 5 * * *|8 10 * * *|22 17 * * *</strong><br>
 This pattern causes a task to be launched every day at 05:00, 10:08 and
 17:22.</p>
 <p><a href="#pIndex">Back to index</a></p>
@@ -431,19 +431,19 @@ implementation of the following methods:</p>
 <ul>
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskLaunching(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskLaunching(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskLaunching(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskLaunching(TaskExecutor)</em></a><br>
 	This one is called every time a task is launched by the scheduler.</p>
 	</li>
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskSucceeded(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskSucceeded(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskSucceeded(it.sauronsoftware.cron4j.TaskExecutor)"><em>taskSucceeded(TaskExecutor)</em></a><br>
 	This one is called every time a task execution has been successfully
 	completed.</p>
 	</li>
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/SchedulerListener.html#taskFailed(it.sauronsoftware.cron4j.TaskExecutor,%20java.lang.Throwable)"><em>taskFailed(TaskExecutor,
-	Throwable)</em></a><br />
+	Throwable)</em></a><br>
 	This one is called every time a task execution fails due to an uncaught
 	exception.</p>
 	</li>
@@ -561,14 +561,14 @@ methods:</p>
 
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionPausing(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionPausing(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionPausing(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionPausing(TaskExecutor)</em></a><br>
 	Called when the executor is requested to pause the ongoing task. The
 	given parameter represents the source <em>TaskExecutor</em> instance.</p>
 	</li>
 
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionResuming(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionResuming(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionResuming(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionResuming(TaskExecutor)</em></a><br>
 	Called when the executor is requested to resume the execution of the
 	previously paused task. The given parameter represents the source <em>TaskExecutor</em>
 	instance.</p>
@@ -576,7 +576,7 @@ methods:</p>
 
 	<li>
 	<p><a
-		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionStopping(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionStopping(TaskExecutor)</em></a><br />
+		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionStopping(it.sauronsoftware.cron4j.TaskExecutor)"><em>executionStopping(TaskExecutor)</em></a><br>
 	Called when the executor is requested to stop the task execution. The
 	given parameter represents the source <em>TaskExecutor</em> instance.</p>
 	</li>
@@ -584,7 +584,7 @@ methods:</p>
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#executionTerminated(it.sauronsoftware.cron4j.TaskExecutor,%20java.lang.Throwable)"><em>executionTerminated(TaskExecutor,
-	Throwable)</em></a><br />
+	Throwable)</em></a><br>
 	Called when the executor has completed the task execution. The first
 	parameter represents the source <em>TaskExecutor</em> instance, while
 	the second is the optional exception that has caused the task to be
@@ -595,7 +595,7 @@ methods:</p>
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#statusMessageChanged(it.sauronsoftware.cron4j.TaskExecutor,%20java.lang.String)"><em>statusMessageChanged(TaskExecutor,
-	String)</em></a><br />
+	String)</em></a><br>
 	Called every time the execution status message changes. The first
 	parameter represents the source <em>TaskExecutor</em> instance, while
 	the second is the new message issued by the task.</p>
@@ -604,7 +604,7 @@ methods:</p>
 	<li>
 	<p><a
 		href="api/it/sauronsoftware/cron4j/TaskExecutor.html#completenessValueChanged(it.sauronsoftware.cron4j.TaskExecutor,%20double)"><em>completenessValueChanged(TaskExecutor,
-	double)</em></a><br />
+	double)</em></a><br>
 	Called every time the execution completeness value changes. The first
 	parameter represents the source <em>TaskExecutor</em> instance, while
 	the second is the new completeness value (between 0 and 1) issued by

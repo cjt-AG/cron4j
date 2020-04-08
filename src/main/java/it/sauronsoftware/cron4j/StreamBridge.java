@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * supplied {@link InputStream} instance is read, and the incoming contents are
  * written in the supplied {@link OutputStream}.
  * </p>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -38,7 +38,7 @@ class StreamBridge {
 	/**
 	 * Used to trace alive instances.
 	 */
-	private static ArrayList traced = new ArrayList();
+	private static ArrayList<StreamBridge> traced = new ArrayList<>();
 
 	/**
 	 * A self-referece, for inner classes.
@@ -62,13 +62,13 @@ class StreamBridge {
 
 	/**
 	 * Builds the instance.
-	 * 
+	 *
 	 * @param in
 	 *            The stream from which the data is read.
 	 * @param out
 	 *            The stream in which the data is written.
 	 */
-	public StreamBridge(InputStream in, OutputStream out) {
+	public StreamBridge(final InputStream in, final OutputStream out) {
 		this.in = in;
 		this.out = out;
 		this.thread = new Thread(new Runner());
@@ -103,7 +103,7 @@ class StreamBridge {
 
 	/**
 	 * Waits for this job to die.
-	 * 
+	 *
 	 * @throws InterruptedException
 	 *             If another thread has interrupted the current thread. The
 	 *             interrupted status of the current thread is cleared when this
@@ -116,7 +116,7 @@ class StreamBridge {
 	/**
 	 * Waits at most <code>millis</code> milliseconds for this thread to die. A
 	 * timeout of <code>0</code> means to wait forever.
-	 * 
+	 *
 	 * @param millis
 	 *            the time to wait in milliseconds.
 	 * @throws InterruptedException
@@ -124,7 +124,7 @@ class StreamBridge {
 	 *             interrupted status of the current thread is cleared when this
 	 *             exception is thrown.
 	 */
-	public void join(long millis) throws InterruptedException {
+	public void join(final long millis) throws InterruptedException {
 		thread.join(millis);
 	}
 
@@ -141,15 +141,15 @@ class StreamBridge {
 	 *             interrupted status of the current thread is cleared when this
 	 *             exception is thrown.
 	 */
-	public void join(long millis, int nanos) throws IllegalArgumentException,
-			InterruptedException {
+	public void join(final long millis, final int nanos) throws IllegalArgumentException,
+	InterruptedException {
 		thread.join(millis, nanos);
 	}
 
 	/**
 	 * Tests if this bridge is alive. A job is alive if it has been started and
 	 * has not yet completed.
-	 * 
+	 *
 	 * @return <code>true</code> if this thread is alive; <code>false</code>
 	 *         otherwise.
 	 */
@@ -162,6 +162,7 @@ class StreamBridge {
 	 */
 	private class Runner implements Runnable {
 
+		@Override
 		public void run() {
 			boolean skipout = false;
 			for (;;) {

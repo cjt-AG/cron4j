@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -24,7 +24,7 @@ package it.sauronsoftware.cron4j;
  * most of the time sleeping. It wakes up every minute and it requests to the
  * scheduler the spawning of a {@link LauncherThread}.
  * </p>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -42,11 +42,11 @@ class TimerThread extends Thread {
 
 	/**
 	 * Builds the timer thread.
-	 * 
+	 *
 	 * @param scheduler
 	 *            The owner scheduler.
 	 */
-	public TimerThread(Scheduler scheduler) {
+	public TimerThread(final Scheduler scheduler) {
 		this.scheduler = scheduler;
 		// Thread name.
 		String name = "cron4j::scheduler[" + scheduler.getGuid() + "]::timer[" + guid + "]";
@@ -55,7 +55,7 @@ class TimerThread extends Thread {
 
 	/**
 	 * Returns the GUID for this object.
-	 * 
+	 *
 	 * @return The GUID for this object.
 	 */
 	public Object getGuid() {
@@ -67,7 +67,7 @@ class TimerThread extends Thread {
 	 * exits before the requested time has passed. This one offers an
 	 * alternative that sometimes could sleep a few millis more than requested,
 	 * but never less.
-	 * 
+	 *
 	 * @param millis
 	 *            The length of time to sleep in milliseconds.
 	 * @throws InterruptedException
@@ -76,7 +76,7 @@ class TimerThread extends Thread {
 	 *             when this exception is thrown.
 	 * @see Thread#sleep(long)
 	 */
-	private void safeSleep(long millis) throws InterruptedException {
+	private void safeSleep(final long millis) throws InterruptedException {
 		long done = 0;
 		do {
 			long before = System.currentTimeMillis();
@@ -86,22 +86,23 @@ class TimerThread extends Thread {
 				// Clock time has changed during sleep!
 				return;
 			}
-			done += (after - before);
+			done += after - before;
 		} while (done < millis);
 	}
 
 	/**
 	 * Overrides {@link Thread#run()}.
 	 */
+	@Override
 	public void run() {
 		// What time is it?
 		long millis = System.currentTimeMillis();
 		// Calculating next minute.
-		long nextMinute = ((millis / 60000) + 1) * 60000;
+		long nextMinute = (millis / 60000 + 1) * 60000;
 		// Work until the scheduler is started.
 		for (;;) {
 			// Coffee break 'till next minute comes!
-			long sleepTime = (nextMinute - System.currentTimeMillis());
+			long sleepTime = nextMinute - System.currentTimeMillis();
 			if (sleepTime > 0) {
 				try {
 					safeSleep(sleepTime);
@@ -115,7 +116,7 @@ class TimerThread extends Thread {
 			// Launching the launching thread!
 			scheduler.spawnLauncher(millis);
 			// Calculating next minute.
-			nextMinute = ((millis / 60000) + 1) * 60000;
+			nextMinute = (millis / 60000 + 1) * 60000;
 		}
 		// Discard scheduler reference.
 		scheduler = null;

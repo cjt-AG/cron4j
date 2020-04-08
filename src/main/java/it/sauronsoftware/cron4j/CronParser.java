@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -69,11 +69,11 @@ import java.util.ArrayList;
  * <p>
  * A valid scheduling line respects the following structure:
  * </p>
- * 
+ *
  * <pre>
  * scheduling-pattern [options] command [args]
  * </pre>
- * 
+ *
  * <ul>
  * <li><em>scheduling-pattern</em> is a valid scheduling pattern, according with
  * the definition given by the {@link SchedulingPattern} class.</li>
@@ -126,7 +126,7 @@ import java.util.ArrayList;
  * accept an array of strings as its sole argument. To invoke a method of this
  * kind the syntax is:
  * </p>
- * 
+ *
  * <pre>
  * scheduling-pattern java:className#methodName [args]
  * </pre>
@@ -147,7 +147,7 @@ import java.util.ArrayList;
  * <p>
  * Valid examples:
  * </p>
- * 
+ *
  * <pre>
  * 0 5 * * * sol.exe
  * 0,30 * * * * OUT:C:\ping.txt ping 10.9.43.55
@@ -155,7 +155,7 @@ import java.util.ArrayList;
  * 0 3 * * * ENV:JAVA_HOME=C:\jdks\1.4.2_15 DIR:C:\myproject OUT:C:\myproject\build.log C:\myproject\build.bat &quot;Nightly Build&quot;
  * 0 4 * * * java:mypackage.MyClass#startApplication myOption1 myOption2
  * </pre>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.0
  */
@@ -171,38 +171,28 @@ public class CronParser {
 	 * <p>
 	 * Builds a task list reading it from a file.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The file is treated as UTF-8. If your source file is not UTF-8 encoded
 	 * establish by yourself a {@link Reader} using the right charset and pass
 	 * it to the {@link CronParser#parse(Reader)} method.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Syntax and semantics errors in the source file are not blocking. Invalid
 	 * lines are discarded, and they cause just a stack trace to be printed in
 	 * the standard error channel as a notification.
 	 * </p>
-	 * 
+	 *
 	 * @param file
 	 *            The file.
 	 * @return The task table parsed from the file.
 	 * @throws IOException
 	 *             I/O error.
 	 */
-	public static TaskTable parse(File file) throws IOException {
-		InputStream stream = null;
-		try {
-			stream = new FileInputStream(file);
+	public static TaskTable parse(final File file) throws IOException {
+		try (InputStream stream = new FileInputStream(file)){
 			return parse(stream);
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (Throwable t) {
-					;
-				}
-			}
 		}
 	}
 
@@ -210,19 +200,19 @@ public class CronParser {
 	 * <p>
 	 * Builds a task list reading it from an URL.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Contents fetched from the URL are treated as UTF-8. If your source is not
 	 * UTF-8 encoded establish by yourself a {@link Reader} using the right
 	 * charset and pass it to the {@link CronParser#parse(Reader)} method.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Syntax and semantics errors in the retrieved document are not blocking.
 	 * Invalid lines are discarded, and they cause just a stack trace to be
 	 * printed in the standard error channel as a notification.
 	 * </p>
-	 * 
+	 *
 	 * @param url
 	 *            The URL.
 	 * @return The task table parsed from the contents fetched from the given
@@ -230,19 +220,9 @@ public class CronParser {
 	 * @throws IOException
 	 *             I/O error.
 	 */
-	public static TaskTable parse(URL url) throws IOException {
-		InputStream stream = null;
-		try {
-			stream = url.openStream();
+	public static TaskTable parse(final URL url) throws IOException {
+		try (InputStream stream = url.openStream();){
 			return parse(stream);
-		} finally {
-			if (stream != null) {
-				try {
-					stream.close();
-				} catch (Throwable t) {
-					;
-				}
-			}
 		}
 	}
 
@@ -250,26 +230,26 @@ public class CronParser {
 	 * <p>
 	 * Builds a task list reading it from an input stream.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The stream is treated as UTF-8. If your source is not UTF-8 encoded
 	 * establish by yourself a {@link Reader} using the right charset and pass
 	 * it to the {@link CronParser#parse(Reader)} method.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Syntax and semantics errors in the source stream are not blocking.
 	 * Invalid lines are discarded, and they cause just a stack trace to be
 	 * printed in the standard error channel as a notification.
 	 * </p>
-	 * 
+	 *
 	 * @param stream
 	 *            The input stream.
 	 * @return The task table parsed from the stream contents.
 	 * @throws IOException
 	 *             I/O error.
 	 */
-	public static TaskTable parse(InputStream stream) throws IOException {
+	public static TaskTable parse(final InputStream stream) throws IOException {
 		return parse(new InputStreamReader(stream, "UTF-8"));
 	}
 
@@ -277,20 +257,20 @@ public class CronParser {
 	 * <p>
 	 * Builds a task list reading it from a reader.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Syntax and semantics errors in the source reader are not blocking.
 	 * Invalid lines are discarded, and they cause just a stack trace to be
 	 * printed in the standard error channel as a notification.
 	 * </p>
-	 * 
+	 *
 	 * @param reader
 	 *            The reader.
 	 * @return The task table parsed from the contents in the reader.
 	 * @throws IOException
 	 *             I/O error.
 	 */
-	public static TaskTable parse(Reader reader) throws IOException {
+	public static TaskTable parse(final Reader reader) throws IOException {
 		TaskTable table = new TaskTable();
 		BufferedReader bufferedReader = new BufferedReader(reader);
 		try {
@@ -311,7 +291,7 @@ public class CronParser {
 
 	/**
 	 * Parses a crontab-like line.
-	 * 
+	 *
 	 * @param table
 	 *            The table on which the parsed task will be stored, by
 	 *            side-effect.
@@ -320,7 +300,7 @@ public class CronParser {
 	 * @throws Exception
 	 *             The supplied line doesn't represent a valid task line.
 	 */
-	public static void parseLine(TaskTable table, String line) throws Exception {
+	public static void parseLine(final TaskTable table, String line) throws Exception {
 		line = line.trim();
 		if (line.length() == 0 || line.charAt(0) == '#') {
 			return;
@@ -341,7 +321,7 @@ public class CronParser {
 		line = line.substring(pattern.length());
 		size = line.length();
 		// Splitting the line
-		ArrayList splitted = new ArrayList();
+		ArrayList<String> splitted = new ArrayList<>();
 		StringBuffer current = null;
 		boolean quotes = false;
 		for (int i = 0; i < size; i++) {
@@ -358,12 +338,12 @@ public class CronParser {
 			} else {
 				boolean closeCurrent;
 				if (quotes) {
-					closeCurrent = (c == '"');
+					closeCurrent = c == '"';
 				} else {
-					closeCurrent = (c <= ' ');
+					closeCurrent = c <= ' ';
 				}
 				if (closeCurrent) {
-					if (current != null && current.length() > 0) {
+					if (current.length() > 0) {
 						String str = current.toString();
 						if (quotes) {
 							str = escape(str);
@@ -394,11 +374,11 @@ public class CronParser {
 		File stdinFile = null;
 		File stdoutFile = null;
 		File stderrFile = null;
-		ArrayList envsList = new ArrayList();
+		ArrayList<String> envsList = new ArrayList<>();
 		String command = null;
-		ArrayList argsList = new ArrayList();
+		ArrayList<String> argsList = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
-			String tk = (String) splitted.get(i);
+			String tk = splitted.get(i);
 			// Check the local status.
 			if (status == 0) {
 				// Environment variables, working directory and channels
@@ -456,7 +436,7 @@ public class CronParser {
 			}
 			String[] args = new String[argsList.size()];
 			for (int i = 0; i < argsList.size(); i++) {
-				args[i] = (String) argsList.get(i);
+				args[i] = argsList.get(i);
 			}
 			task = new StaticMethodTask(className, methodName, args);
 		} else {
@@ -464,7 +444,7 @@ public class CronParser {
 			String[] cmdarray = new String[1 + argsList.size()];
 			cmdarray[0] = command;
 			for (int i = 0; i < argsList.size(); i++) {
-				cmdarray[i + 1] = (String) argsList.get(i);
+				cmdarray[i + 1] = argsList.get(i);
 			}
 			// Environments.
 			String[] envs = null;
@@ -472,7 +452,7 @@ public class CronParser {
 			if (size > 0) {
 				envs = new String[size];
 				for (int i = 0; i < size; i++) {
-					envs[i] = (String) envsList.get(i);
+					envs[i] = envsList.get(i);
 				}
 			}
 			// Working directory.
@@ -483,8 +463,8 @@ public class CronParser {
 					throw new Exception(
 							"Invalid cron working directory parameter at line: "
 									+ line,
-							new FileNotFoundException(dirString
-									+ " doesn't exist or it is not a directory"));
+									new FileNotFoundException(dirString
+											+ " doesn't exist or it is not a directory"));
 				}
 			}
 			// Builds the task.
@@ -507,12 +487,12 @@ public class CronParser {
 
 	/**
 	 * Escapes special chars occurrences.
-	 * 
+	 *
 	 * @param str
 	 *            The input stream.
 	 * @return The decoded output stream.
 	 */
-	private static String escape(String str) {
+	private static String escape(final String str) {
 		int size = str.length();
 		StringBuffer b = new StringBuffer();
 		for (int i = 0; i < size; i++) {
@@ -564,7 +544,7 @@ public class CronParser {
 			if (skip == 0) {
 				b.append(c);
 			} else {
-				i += (skip - 1);
+				i += skip - 1;
 			}
 		}
 		return b.toString();

@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -31,7 +31,7 @@ import java.io.OutputStream;
  * A built-in {@link Task} implementation which can be used to run an external
  * process.
  * </p>
- * 
+ *
  * @author Carlo Pelliccia
  * @since 2.1
  */
@@ -72,7 +72,7 @@ public class ProcessTask extends Task {
 
 	/**
 	 * Creates the task.
-	 * 
+	 *
 	 * @param command
 	 *            The command to launch and its arguments.
 	 * @param envs
@@ -83,7 +83,7 @@ public class ProcessTask extends Task {
 	 *            Working directory for the spawned process. If null the process
 	 *            will inherit the current JVM working directory.
 	 */
-	public ProcessTask(String[] command, String[] envs, File directory) {
+	public ProcessTask(final String[] command, final String[] envs, final File directory) {
 		this.command = command;
 		this.envs = envs;
 		this.directory = directory;
@@ -91,7 +91,7 @@ public class ProcessTask extends Task {
 
 	/**
 	 * Creates the task.
-	 * 
+	 *
 	 * @param command
 	 *            The command to launch and its arguments.
 	 * @param envs
@@ -99,40 +99,41 @@ public class ProcessTask extends Task {
 	 *            <em>name=value</em>. If null the process will inherit the
 	 *            current JVM environment variables.
 	 */
-	public ProcessTask(String[] command, String[] envs) {
+	public ProcessTask(final String[] command, final String[] envs) {
 		this(command, envs, null);
 	}
 
 	/**
 	 * Creates the task.
-	 * 
+	 *
 	 * @param command
 	 *            The command to launch and its arguments.
 	 */
-	public ProcessTask(String[] command) {
+	public ProcessTask(final String[] command) {
 		this(command, null, null);
 	}
 
 	/**
 	 * Creates the task.
-	 * 
+	 *
 	 * @param command
 	 *            The command to launch.
 	 */
-	public ProcessTask(String command) {
+	public ProcessTask(final String command) {
 		this(new String[] { command }, null, null);
 	}
 
 	/**
 	 * Returns true.
 	 */
+	@Override
 	public boolean canBeStopped() {
 		return true;
 	}
 
 	/**
 	 * Returns the command executed by this task.
-	 * 
+	 *
 	 * @return The command executed by this task.
 	 */
 	public String[] getCommand() {
@@ -141,11 +142,11 @@ public class ProcessTask extends Task {
 
 	/**
 	 * Sets the command executed by this task.
-	 * 
+	 *
 	 * @param command
 	 *            The command executed by this task.
 	 */
-	public void setCommand(String[] command) {
+	public void setCommand(final String[] command) {
 		this.command = command;
 	}
 
@@ -153,7 +154,7 @@ public class ProcessTask extends Task {
 	 * Returns the environment variables, in the <em>name=value</em> form, used
 	 * by the task to run its process. If null the process will inherit the
 	 * current JVM environment variables.
-	 * 
+	 *
 	 * @return The environment variables, in the <em>name=value</em> form, used
 	 *         by the task to run its process. If null the process will inherit
 	 *         the current JVM environment variables.
@@ -166,20 +167,20 @@ public class ProcessTask extends Task {
 	 * Sets the environment variables, in the <em>name=value</em> form, used by
 	 * the task to run its process. If null the process will inherit the current
 	 * JVM environment variables.
-	 * 
+	 *
 	 * @param envs
 	 *            The environment variables, in the <em>name=value</em> form,
 	 *            used by the task to run its process. If null the process will
 	 *            inherit the current JVM environment variables.
 	 */
-	public void setEnvs(String[] envs) {
+	public void setEnvs(final String[] envs) {
 		this.envs = envs;
 	}
 
 	/**
 	 * Resturns the working directory for the spawned process. If null the
 	 * process will inherit the current JVM working directory.
-	 * 
+	 *
 	 * @return The working directory for the spawned process. If null the
 	 *         process will inherit the current JVM working directory.
 	 */
@@ -190,19 +191,19 @@ public class ProcessTask extends Task {
 	/**
 	 * Sets the working directory for the spawned process. If null the process
 	 * will inherit the current JVM working directory.
-	 * 
+	 *
 	 * @param directory
 	 *            The working directory for the spawned process. If null the
 	 *            process will inherit the current JVM working directory.
 	 */
-	public void setDirectory(File directory) {
+	public void setDirectory(final File directory) {
 		this.directory = directory;
 	}
 
 	/**
 	 * Returns the standard input file (optional). If supplied, the standard
 	 * input channel of the spawned process will be read from the given file.
-	 * 
+	 *
 	 * @return The standard input file (optional).
 	 */
 	public File getStdinFile() {
@@ -212,29 +213,29 @@ public class ProcessTask extends Task {
 	/**
 	 * Sets the standard input file (optional). If supplied, the standard input
 	 * channel of the spawned process will be read from the given file.
-	 * 
+	 *
 	 * @param stdinFile
 	 *            The standard input file (optional).
 	 */
-	public void setStdinFile(File stdinFile) {
+	public void setStdinFile(final File stdinFile) {
 		this.stdinFile = stdinFile;
 	}
 
 	/**
 	 * Sets the standard output file (optional). If supplied, the standard
 	 * output channel of the spawned process will be written in the given file.
-	 * 
+	 *
 	 * @param stdoutFile
 	 *            The standard output file (optional).
 	 */
-	public void setStdoutFile(File stdoutFile) {
+	public void setStdoutFile(final File stdoutFile) {
 		this.stdoutFile = stdoutFile;
 	}
 
 	/**
 	 * Returns the standard output file (optional). If supplied, the standard
 	 * output channel of the spawned process will be written in the given file.
-	 * 
+	 *
 	 * @return The standard output file (optional).
 	 */
 	public File getStdoutFile() {
@@ -244,18 +245,18 @@ public class ProcessTask extends Task {
 	/**
 	 * Sets the standard error file (optional). If supplied, the standard error
 	 * channel of the spawned process will be written in the given file.
-	 * 
+	 *
 	 * @param stderrFile
 	 *            The standard error file (optional).
 	 */
-	public void setStderrFile(File stderrFile) {
+	public void setStderrFile(final File stderrFile) {
 		this.stderrFile = stderrFile;
 	}
 
 	/**
 	 * Returns the standard error file (optional). If supplied, the standard
 	 * error channel of the spawned process will be written in the given file.
-	 * 
+	 *
 	 * @return The standard error file (optional).
 	 */
 	public File getStderrFile() {
@@ -266,7 +267,8 @@ public class ProcessTask extends Task {
 	 * Implements {@link Task#execute(TaskExecutionContext)}. Runs the given
 	 * command as a separate process and waits for its end.
 	 */
-	public void execute(TaskExecutionContext context) throws RuntimeException {
+	@Override
+	public void execute(final TaskExecutionContext context) throws RuntimeException {
 		Process p;
 		try {
 			p = exec();
@@ -321,7 +323,7 @@ public class ProcessTask extends Task {
 
 	/**
 	 * Executes the command.
-	 * 
+	 *
 	 * @return The launched Process.
 	 * @throws IOException
 	 *             If an I/O error occurs.
@@ -341,12 +343,12 @@ public class ProcessTask extends Task {
 
 	/**
 	 * Prepares an {@link InputStream} on a file and returns it.
-	 * 
+	 *
 	 * @param file
 	 *            The file.
 	 * @return The stream, or null if the file is not found.
 	 */
-	private InputStream buildInputStream(File file) {
+	private InputStream buildInputStream(final File file) {
 		if (file != null) {
 			try {
 				return new FileInputStream(file);
@@ -360,12 +362,12 @@ public class ProcessTask extends Task {
 
 	/**
 	 * Prepares an {@link OutputStream} on a file and returns it.
-	 * 
+	 *
 	 * @param file
 	 *            The file.
 	 * @return The stream, or null if the file is not found.
 	 */
-	private OutputStream buildOutputStream(File file) {
+	private OutputStream buildOutputStream(final File file) {
 		if (file != null) {
 			try {
 				return new FileOutputStream(file);
@@ -380,12 +382,12 @@ public class ProcessTask extends Task {
 	/**
 	 * Prints in the returned string the elements contained in the given string
 	 * array.
-	 * 
+	 *
 	 * @param arr
 	 *            The array.
 	 * @return A string representing the supplied array contents.
 	 */
-	private static String listStrings(String[] arr) {
+	private static String listStrings(final String[] arr) {
 		if (arr == null) {
 			return "null";
 		} else {
@@ -405,6 +407,7 @@ public class ProcessTask extends Task {
 	/**
 	 * Overrides {@link Object#toString()}.
 	 */
+	@Override
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append("Task[");

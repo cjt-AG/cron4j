@@ -1,8 +1,8 @@
 /*
  * cron4j - A pure Java cron-like scheduler
- * 
+ *
  * Copyright (C) 2007-2010 Carlo Pelliccia (www.sauronsoftware.it)
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version
  * 2.1, as published by the Free Software Foundation.
@@ -19,7 +19,6 @@
 package it.sauronsoftware.cron4j;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * <p>
@@ -34,7 +33,7 @@ import java.util.Iterator;
  * {@link Scheduler#getExecutingTasks()} method, and they expose method to
  * control the ongoing execution.
  * </p>
- * 
+ *
  * @see Scheduler#getExecutingTasks()
  * @author Carlo Pelliccia
  * @since 2.0
@@ -69,7 +68,7 @@ public class TaskExecutor {
 	/**
 	 * A list of {@link TaskExecutorListener} instances.
 	 */
-	private ArrayList listeners = new ArrayList();
+	private ArrayList<TaskExecutorListener> listeners = new ArrayList<>();
 
 	/**
 	 * A time stamp reporting the start time of this thread.
@@ -98,13 +97,13 @@ public class TaskExecutor {
 
 	/**
 	 * Builds the executor.
-	 * 
+	 *
 	 * @param scheduler
 	 *            The scheduler whose this executor belongs to.
 	 * @param task
 	 *            The task that has to be executed.
 	 */
-	TaskExecutor(Scheduler scheduler, Task task) {
+	TaskExecutor(final Scheduler scheduler, final Task task) {
 		this.scheduler = scheduler;
 		this.task = task;
 		this.context = new MyContext();
@@ -112,11 +111,11 @@ public class TaskExecutor {
 
 	/**
 	 * Adds a listener to the executor.
-	 * 
+	 *
 	 * @param listener
 	 *            The listener.
 	 */
-	public void addTaskExecutorListener(TaskExecutorListener listener) {
+	public void addTaskExecutorListener(final TaskExecutorListener listener) {
 		synchronized (listeners) {
 			listeners.add(listener);
 		}
@@ -124,11 +123,11 @@ public class TaskExecutor {
 
 	/**
 	 * Removes a listener from the executor.
-	 * 
+	 *
 	 * @param listener
 	 *            The listener.
 	 */
-	public void removeTaskExecutorListener(TaskExecutorListener listener) {
+	public void removeTaskExecutorListener(final TaskExecutorListener listener) {
 		synchronized (listeners) {
 			listeners.remove(listener);
 		}
@@ -139,7 +138,7 @@ public class TaskExecutor {
 	 * registered with the
 	 * {@link TaskExecutor#addTaskExecutorListener(TaskExecutorListener)}
 	 * method.
-	 * 
+	 *
 	 * @return An array containing any {@link TaskExecutorListener} previously
 	 *         registered with the
 	 *         {@link TaskExecutor#addTaskExecutorListener(TaskExecutorListener)}
@@ -150,7 +149,7 @@ public class TaskExecutor {
 			int size = listeners.size();
 			TaskExecutorListener[] ret = new TaskExecutorListener[size];
 			for (int i = 0; i < size; i++) {
-				ret[i] = (TaskExecutorListener) listeners.get(i);
+				ret[i] = listeners.get(i);
 			}
 			return ret;
 		}
@@ -158,7 +157,7 @@ public class TaskExecutor {
 
 	/**
 	 * Returns a GUID for this executor.
-	 * 
+	 *
 	 * @return A GUID for this executor.
 	 */
 	public String getGuid() {
@@ -167,7 +166,7 @@ public class TaskExecutor {
 
 	/**
 	 * Returns the {@link Scheduler} instance whose this executor belongs to.
-	 * 
+	 *
 	 * @return The scheduler.
 	 */
 	public Scheduler getScheduler() {
@@ -176,7 +175,7 @@ public class TaskExecutor {
 
 	/**
 	 * Returns the representation of the executed task.
-	 * 
+	 *
 	 * @return The executing/executed task.
 	 */
 	public Task getTask() {
@@ -186,7 +185,7 @@ public class TaskExecutor {
 	/**
 	 * Returns a time stamp reporting the start time of this executor, or a
 	 * value less than 0 if this executor has not been yet started.
-	 * 
+	 *
 	 * @return A time stamp reporting the start time of this executor, or a
 	 *         value less than 0 if this executor has not been yet started.
 	 */
@@ -196,7 +195,7 @@ public class TaskExecutor {
 
 	/**
 	 * Checks whether this executor supports pausing.
-	 * 
+	 *
 	 * @return true if this executor supports pausing.
 	 */
 	public boolean canBePaused() {
@@ -205,7 +204,7 @@ public class TaskExecutor {
 
 	/**
 	 * Checks whether this executor supports stopping.
-	 * 
+	 *
 	 * @return true if this executor supports stopping.
 	 */
 	public boolean canBeStopped() {
@@ -214,7 +213,7 @@ public class TaskExecutor {
 
 	/**
 	 * Checks whether this executor provides completeness tracking informations.
-	 * 
+	 *
 	 * @return true if this executor provides completeness tracking
 	 *         informations.
 	 */
@@ -224,7 +223,7 @@ public class TaskExecutor {
 
 	/**
 	 * Checks whether this executor provides status tracking messages.
-	 * 
+	 *
 	 * @return true if this executor provides status tracking messages.
 	 */
 	public boolean supportsStatusTracking() {
@@ -233,11 +232,11 @@ public class TaskExecutor {
 
 	/**
 	 * Starts executing the task (spawns a secondary thread).
-	 * 
+	 *
 	 * @param daemon
 	 *            true to spawn a daemon thread; false otherwise.
 	 */
-	void start(boolean daemon) {
+	void start(final boolean daemon) {
 		synchronized (lock) {
 			startTime = System.currentTimeMillis();
 			String name = "cron4j::scheduler[" + scheduler.getGuid() + "]::executor[" + guid + "]";
@@ -250,7 +249,7 @@ public class TaskExecutor {
 
 	/**
 	 * Pauses the ongoing execution.
-	 * 
+	 *
 	 * @throws UnsupportedOperationException
 	 *             The operation is not supported if
 	 *             {@link TaskExecutor#canBePaused()} returns <em>false</em>.
@@ -282,7 +281,7 @@ public class TaskExecutor {
 
 	/**
 	 * Stops the ongoing execution.
-	 * 
+	 *
 	 * @throws UnsupportedOperationException
 	 *             The operation is not supported if
 	 *             {@link TaskExecutor#canBeStopped()} returns <em>false</em>.
@@ -318,7 +317,7 @@ public class TaskExecutor {
 
 	/**
 	 * Waits for this executor to die.
-	 * 
+	 *
 	 * @throws InterruptedException
 	 *             If any thread has interrupted the current thread. The
 	 *             interrupted status of the current thread is cleared when this
@@ -333,7 +332,7 @@ public class TaskExecutor {
 	/**
 	 * Tests if this executor is alive. An executor is alive if it has been
 	 * started and has not yet died.
-	 * 
+	 *
 	 * @return true if this executor is alive; false otherwise.
 	 */
 	public boolean isAlive() {
@@ -346,7 +345,7 @@ public class TaskExecutor {
 
 	/**
 	 * Returns the current status message.
-	 * 
+	 *
 	 * @return The current status message.
 	 * @throws UnsupportedOperationException
 	 *             The operation is not supported if
@@ -363,7 +362,7 @@ public class TaskExecutor {
 
 	/**
 	 * Returns the current completeness value, which is a value between 0 and 1.
-	 * 
+	 *
 	 * @return The current completeness value, which is a value between 0 and 1.
 	 * @throws UnsupportedOperationException
 	 *             The operation is not supported if
@@ -380,7 +379,7 @@ public class TaskExecutor {
 
 	/**
 	 * Tests whether this executor has been paused.
-	 * 
+	 *
 	 * @return true if this executor is paused; false otherwise.
 	 */
 	public boolean isPaused() {
@@ -389,7 +388,7 @@ public class TaskExecutor {
 
 	/**
 	 * Tests whether this executor has been stopped.
-	 * 
+	 *
 	 * @return true if this executor is stopped; false otherwise.
 	 */
 	public boolean isStopped() {
@@ -401,8 +400,8 @@ public class TaskExecutor {
 	 */
 	private void notifyExecutionPausing() {
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext();) {
-				TaskExecutorListener l = (TaskExecutorListener) i.next();
+			for (Object element : listeners) {
+				TaskExecutorListener l = (TaskExecutorListener) element;
 				l.executionPausing(this);
 			}
 		}
@@ -410,12 +409,12 @@ public class TaskExecutor {
 
 	/**
 	 * Notify registered listeners the execution has been resumed.
-	 * 
+	 *
 	 */
 	private void notifyExecutionResuming() {
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext();) {
-				TaskExecutorListener l = (TaskExecutorListener) i.next();
+			for (Object element : listeners) {
+				TaskExecutorListener l = (TaskExecutorListener) element;
 				l.executionResuming(this);
 			}
 		}
@@ -426,8 +425,8 @@ public class TaskExecutor {
 	 */
 	private void notifyExecutionStopping() {
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext();) {
-				TaskExecutorListener l = (TaskExecutorListener) i.next();
+			for (Object element : listeners) {
+				TaskExecutorListener l = (TaskExecutorListener) element;
 				l.executionStopping(this);
 			}
 		}
@@ -435,15 +434,15 @@ public class TaskExecutor {
 
 	/**
 	 * Notify registered listeners the execution has been terminated.
-	 * 
+	 *
 	 * @param exception
 	 *            If the execution has been terminated due to an error, this is
 	 *            the encountered exception; otherwise the parameter is null.
 	 */
-	private void notifyExecutionTerminated(Throwable exception) {
+	private void notifyExecutionTerminated(final Throwable exception) {
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext();) {
-				TaskExecutorListener l = (TaskExecutorListener) i.next();
+			for (Object element : listeners) {
+				TaskExecutorListener l = (TaskExecutorListener) element;
 				l.executionTerminated(this, exception);
 			}
 		}
@@ -451,14 +450,14 @@ public class TaskExecutor {
 
 	/**
 	 * Notify registered listeners the execution status message has changed.
-	 * 
+	 *
 	 * @param statusMessage
 	 *            The new status message.
 	 */
-	private void notifyStatusMessageChanged(String statusMessage) {
+	private void notifyStatusMessageChanged(final String statusMessage) {
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext();) {
-				TaskExecutorListener l = (TaskExecutorListener) i.next();
+			for (Object element : listeners) {
+				TaskExecutorListener l = (TaskExecutorListener) element;
 				l.statusMessageChanged(this, statusMessage);
 			}
 		}
@@ -466,14 +465,14 @@ public class TaskExecutor {
 
 	/**
 	 * Notify registered listeners the execution completeness value has changed.
-	 * 
+	 *
 	 * @param completenessValue
 	 *            The new completeness value.
 	 */
-	private void notifyCompletenessValueChanged(double completenessValue) {
+	private void notifyCompletenessValueChanged(final double completenessValue) {
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext();) {
-				TaskExecutorListener l = (TaskExecutorListener) i.next();
+			for (Object element : listeners) {
+				TaskExecutorListener l = (TaskExecutorListener) element;
 				l.completenessValueChanged(this, completenessValue);
 			}
 		}
@@ -487,6 +486,7 @@ public class TaskExecutor {
 		/**
 		 * It implements {@link Thread#run()}, executing the wrapped task.
 		 */
+		@Override
 		public void run() {
 			Throwable error = null;
 			startTime = System.currentTimeMillis();
@@ -524,18 +524,22 @@ public class TaskExecutor {
 		 */
 		private double completeness = 0D;
 
+		@Override
 		public Scheduler getScheduler() {
 			return scheduler;
 		}
 
+		@Override
 		public TaskExecutor getTaskExecutor() {
 			return myself;
 		}
 
+		@Override
 		public boolean isStopped() {
 			return stopped;
 		}
 
+		@Override
 		public void pauseIfRequested() {
 			synchronized (lock) {
 				if (paused) {
@@ -548,21 +552,23 @@ public class TaskExecutor {
 			}
 		}
 
-		public void setCompleteness(double completeness) {
+		@Override
+		public void setCompleteness(final double completeness) {
 			if (completeness >= 0D && completeness <= 1D) {
 				this.completeness = completeness;
 				notifyCompletenessValueChanged(completeness);
 			}
 		}
 
-		public void setStatusMessage(String message) {
+		@Override
+		public void setStatusMessage(final String message) {
 			this.message = message != null ? message : "";
 			notifyStatusMessageChanged(message);
 		}
 
 		/**
 		 * Returns the current status message.
-		 * 
+		 *
 		 * @return The current status message.
 		 */
 		public String getStatusMessage() {
@@ -572,7 +578,7 @@ public class TaskExecutor {
 		/**
 		 * Returns the current completeness value, which is a value between 0
 		 * and 1.
-		 * 
+		 *
 		 * @return The current completeness value, which is a value between 0
 		 *         and 1.
 		 */
